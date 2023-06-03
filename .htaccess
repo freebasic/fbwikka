@@ -25,6 +25,7 @@ BrowserMatchNoCase MLBot block_bot
 BrowserMatchNoCase Updownerbot block_bot
 BrowserMatchNoCase magpie block_bot
 BrowserMatchNoCase Thales block_bot
+BrowserMatchNoCase facebookexternalhit block_bot
 Deny from env=block_bot
 
 Deny from 88.190.218.213

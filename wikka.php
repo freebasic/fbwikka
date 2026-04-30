@@ -249,13 +249,6 @@ else
 ob_start();
 global $tstart;
 $tstart = getmicrotime();
-ini_set('magic_quotes_runtime', 0);
-if (get_magic_quotes_gpc())
-{
-	magicQuotesWorkaround($_POST);
-	magicQuotesWorkaround($_GET);
-	magicQuotesWorkaround($_COOKIE);
-}
 
 /**
  * Default configuration.
@@ -780,7 +773,7 @@ if(NULL != $user)
 	$res = $wakka->LoadSingle("SELECT * FROM ".$wakka->config['table_prefix']."sessions WHERE sessionid=:sessionid AND userid=:userid",
 		array(':sessionid' => $sessionid, ':userid' => $username));
 	$update = isset($res) ? true : false;
-	db_storeSession($wakka, $update);	
+	db_storeSession($wakka, $update, $sessionid, $username);
 }
 
 /**

@@ -38,7 +38,7 @@ class Side {
     var $argument;
     var $length;
 
-    function Side($content) {
+    function __construct($content) {
        $this->content=$content;
        $this->position=0;
        $this->cursor=0;
@@ -265,7 +265,7 @@ class _DiffOp {
 class _DiffOp_Copy extends _DiffOp {
     var $type = 'copy';
     
-    function _DiffOp_Copy ($orig, $final = false) {
+    function __construct ($orig, $final = false) {
 	if (!is_array($final))
 	    $final = $orig;
 	$this->orig = $orig;
@@ -277,7 +277,7 @@ class _DiffOp_Copy extends _DiffOp {
 class _DiffOp_Delete extends _DiffOp {
     var $type = 'delete';
     
-    function _DiffOp_Delete ($lines) {
+    function __construct ($lines) {
 	$this->orig = $lines;
 	$this->final = false;
     }
@@ -287,7 +287,7 @@ class _DiffOp_Delete extends _DiffOp {
 class _DiffOp_Add extends _DiffOp {
     var $type = 'add';
     
-    function _DiffOp_Add ($lines) {
+    function __construct ($lines) {
 	$this->final = $lines;
 	$this->orig = false;
     }
@@ -297,7 +297,7 @@ class _DiffOp_Add extends _DiffOp {
 class _DiffOp_Change extends _DiffOp {
     var $type = 'change';
     
-    function _DiffOp_Change ($orig, $final) {
+    function __construct ($orig, $final) {
 	$this->orig = $orig;
 	$this->final = $final;
     }
@@ -721,7 +721,7 @@ class Diff
      *        (Typically these are lines from a file.)
      * @param $to_lines array An array of strings.
      */
-    function Diff($from_lines, $to_lines) {
+    function __construct($from_lines, $to_lines) {
 	$eng = new _DiffEngine;
 	$this->edits = $eng->diff($from_lines, $to_lines);
     }

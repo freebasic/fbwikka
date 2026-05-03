@@ -23,7 +23,7 @@
  */
 header('Content-type: text/plain; charset=utf-8');
 
-if ($this->HasAccess("write") && $this->HasAccess("read") && $this->page)
+if ($this->IsAdmin())
 {
 
 	/**
@@ -61,7 +61,13 @@ if ($this->HasAccess("write") && $this->HasAccess("read") && $this->page)
 			$page_title = $wakka->ParsePageTitle($body);
 			if ('' == $page_title)
 			{
-				$page_title = trim(preg_replace('![A-Z]!', " \\0", $tag));
+				// Automatically split camel case to a words i.e. "PageIndex" => "Page Index"
+				//
+				// $page_title = trim(preg_replace('![A-Z]!', " \\0", $tag));
+				//
+
+				// If no title was given in the body, just use the tag name
+				$page_title = $tag;
 			}
 			$wakka->Query("UPDATE ".$wakka->GetConfigValue('table_prefix')."pages set title = :page_title WHERE tag = :tag and latest = 'Y'",
 				array(':page_title' => $page_title,
@@ -71,13 +77,13 @@ if ($this->HasAccess("write") && $this->HasAccess("read") && $this->page)
 		echo "Done.";
 	}
 
-	$task = 'update';
+	$task = '';
 
 	// $task=update or $task=clear ?
 	if (isset($_GET['task']))
 	{
 		$a = $this->GetSafeVar('task', 'get');
-		if ($a == 'clear')
+		if ($a == 'clear' || $a == 'update')
 		{
 			$task = $a;
 		}

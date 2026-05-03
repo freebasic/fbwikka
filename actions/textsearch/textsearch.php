@@ -60,7 +60,7 @@ if ($results)
 		if ($this->HasAccess('read',$page['tag']))
 		{
 			$total_results++;
-			$result_page_list .= '<li>'.$this->Link($page['tag']).' &mdash; '.$this->PageTitle($page['tag']).'</li>'."\n";	// @@@ make new array and let new array2list methods do the formatting
+			$result_page_list .= '<li>'.$this->Link($page['tag']).' &mdash; '.$this->PageTitleHTML($page['tag']).'</li>'."\n";	// @@@ make new array and let new array2list methods do the formatting
 		}
 	}
 }

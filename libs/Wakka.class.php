@@ -2246,6 +2246,20 @@ class Wakka
 	}
 
 	/**
+	 * Return the title of the current page safe for HTML
+	 *
+	 * @uses	Wakka::PageTitle()
+	 *
+	 *
+	 * @param	string	@tag	optional: page to get title for (default current page)
+	 * @return	mixed	the title of the current page or the page name if none found, trimmed
+	 */
+	function PageTitleHTML($tag=null, $prefix=NULL)
+	{
+		return $this->htmlspecialchars_ent($this->PageTitle($tag,$prefix));
+	}
+
+	/**
 	 * Parses the body of a page for a page title
 	 *
 	 * Searches for first instance of header markup in page body and
@@ -2950,7 +2964,7 @@ class Wakka
 			}
 			if ($options['show_page_title'])
 			{
-				$output_page_title = ' <span class="pagetitle">['.$this->PageTitle($val).']</span>';
+				$output_page_title = ' <span class="pagetitle">['.$this->PageTitleHTML($val).']</span>';
 			}
 			if ($options['compact'])
 			{

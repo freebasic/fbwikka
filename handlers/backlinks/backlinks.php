@@ -50,7 +50,7 @@ switch(TRUE)
 			// name change, interface change (active pages only)
 			if ($this->existsPage($tag) && $this->HasAccess('read', $tag))
 			{			
-				print $this->Link($page['page_tag']).'<br />';
+				print $this->Link($page['page_tag']).' &mdash; '.$this->PageTitle($page['page_tag'], "").'<br />';
 			}
 		}
 	}

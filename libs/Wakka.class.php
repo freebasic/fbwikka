@@ -2204,7 +2204,7 @@ class Wakka
 	 * @param	string	@tag	optional: page to get title for (default current page)
 	 * @return	mixed	the title of the current page or the page name if none found, trimmed
 	 */
-	function PageTitle($tag=null)
+	function PageTitle($tag=null, $prefix=NULL)
 	{
 		if ($tag === null)
 		{
@@ -2220,15 +2220,43 @@ class Wakka
 					"pages WHERE tag = :tag
 					AND LATEST = 'Y'";
 			$res = $this->LoadSingle($query, array(':tag' => $tag));
-			$page_title = trim($res['title']) !== '' ? $res['title'] : $tag;
+			if ($res)
+			{
+				$page_title = trim($res['title']) !== '' ? $res['title'] : $tag;
+			}
+			else
+			{
+				$page_title = "Invalid Page Name";
+			}
 			$page_title = strip_tags($page_title);
 		}
 		$handler = $this->GetHandler();
-		if($handler != 'show' &&
-		   $handler != NULL) {
-			$page_title = $handler." \"".trim($page_title)."\"";
+		if($handler != NULL && $handler != 'show')
+		{
+			if ($prefix === NULL)
+			{
+				$page_title = $handler." \"".trim($page_title)."\"";
+			}
+			else
+			{
+				$page_title = $prefix."\"".trim($page_title)."\"";
+			}
 		}
 		return $page_title;
+	}
+
+	/**
+	 * Return the title of the current page safe for HTML
+	 *
+	 * @uses	Wakka::PageTitle()
+	 *
+	 *
+	 * @param	string	@tag	optional: page to get title for (default current page)
+	 * @return	mixed	the title of the current page or the page name if none found, trimmed
+	 */
+	function PageTitleHTML($tag=null, $prefix=NULL)
+	{
+		return $this->htmlspecialchars_ent($this->PageTitle($tag,$prefix));
 	}
 
 	/**
@@ -2253,6 +2281,7 @@ class Wakka
 		{
 			list($h_fullmatch, $h_heading) = $matches;
 			$page_title = $this->SetPageTitle($h_heading);
+			return trim(strip_tags($page_title));
 		}
 		elseif (preg_match("#(={3,6})([^=].*?)\\1#s", $body, $matches))
 		{
@@ -2935,7 +2964,7 @@ class Wakka
 			}
 			if ($options['show_page_title'])
 			{
-				$output_page_title = ' <span class="pagetitle">['.$this->PageTitle($val).']</span>';
+				$output_page_title = ' <span class="pagetitle">['.$this->PageTitleHTML($val).']</span>';
 			}
 			if ($options['compact'])
 			{

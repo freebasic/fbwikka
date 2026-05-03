@@ -670,7 +670,7 @@ Prints the title of the current page: {{title}}
 
 %%(php)
 <?php
-echo $this->PageTitle();
+echo $this->PageTitleHTML();
 ?>
 %%
 

@@ -126,7 +126,7 @@ if ($results)
 				$highlightMatch = preg_replace('/('.$this->htmlspecialchars_ent($phrase_re).')/i','<<$1>>',$text,-1); // -1 = no limit (default!)
 			}
 			$matchText = "&hellip;".str_replace(array('<<', '>>'), array('<span class="tse_keywords">', '</span>'), $highlightMatch)."&hellip;";
-			$result_page_list .= "\n<li>".$this->Link($page["tag"])." &mdash; ".$page['time'];
+			$result_page_list .= "\n<li>".$this->Link($page["tag"]).' &mdash; '.$this->PageTitleHTML($page['tag'])." &mdash; ".$page['time'];
 			$result_page_list .= "\n<blockquote>".$matchText."</blockquote>\n";
 			$result_page_list .= "\n</li>\n";
 		}

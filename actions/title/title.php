@@ -1,3 +1,3 @@
 <?php
-echo $this->PageTitle();
+echo $this->PageTitleHTML();
 ?>

@@ -85,14 +85,14 @@ class safehtml {
   var $formControls = array('input', 'select', 'textarea', 'button');		# form controls where a name attribute is valid - JavaWoman
 
   // constructor
-  function safehtml() {
+  function __construct() {
 
 	//making regular expressions based on Proto & CSS arrays
 	foreach ($this->BlackProtocols as $proto)
 	{
 	 $preg = "/[\s\x01-\x1F]*";
 	 for ($i=0;$i<strlen($proto);$i++)
-	   $preg .= $proto{$i}."[\s\x01-\x1F]*";
+	   $preg .= $proto[$i]."[\s\x01-\x1F]*";
 	 $preg .= ":/i";
 	 $this->Protopreg[] = $preg;
 	}
@@ -257,7 +257,7 @@ class safehtml {
 
 	$name = strtolower($name);
 
-	if ($this->dcCounter[$name]>0 && in_array($name, $this->DeleteContent))
+	if (isset($this->dcCounter) && $this->dcCounter[$name]>0 && in_array($name, $this->DeleteContent))
 	{
 	 while ($name!=($tag=array_pop($this->dcStack)))
 	 {

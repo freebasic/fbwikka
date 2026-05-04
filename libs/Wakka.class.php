@@ -244,7 +244,7 @@ class Wakka
 	 * @uses	Config::$dbms_user
 	 * @uses	Config::$dbms_type
 	 */
-	function Wakka($config)
+	function __construct($config)
 	{
 		$this->config = $config;
 
@@ -1667,7 +1667,7 @@ class Wakka
 	function SetPage($page)
 	{
 		$this->page = $page;
-		if ($this->page['tag'])
+		if ($this->page && $this->page['tag'])
 		{
 			$this->tag = $this->page['tag'];
 		}
@@ -4147,7 +4147,7 @@ class Wakka
 	 *					the username occurs in the cache or database.
 	 * @return	boolean	TRUE is user is registered, FALSE otherwise
 	 */
-	function existsUser($username=NULL)
+	function existsUser($username=NULL,$name=NULL)
 	{
 		global $debug;
 		// init
@@ -4167,7 +4167,7 @@ class Wakka
 			$result = FALSE;
 		}
 		// look up named user in database & cache name
-		else
+		elseif (strlen($name) > 0)
 		{
 			$user = $this->LoadSingle("
 				SELECT `name`

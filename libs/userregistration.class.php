@@ -48,7 +48,7 @@ class URAuth
 	 * @access	public
 	 * @param	object	$wakka	Provides access to the main Wakka object
 	 */
-	function URAuth($wakka)
+	function __construct($wakka)
 	{
 		$this->wakka = $wakka;
 		$this->classlist = array();
@@ -182,7 +182,7 @@ class URAuthTmpl
 	 * @access	public
 	 * @param	object	$wakka	Provides access to the main Wakka object
 	 */
-	function URAuthTmpl(&$wakka)
+	function __construct(&$wakka)
 	{
 		$this->serial = time();
 		$this->wakka = $wakka;

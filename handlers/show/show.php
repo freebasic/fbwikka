@@ -48,7 +48,10 @@ $raw = (!empty($_GET['raw']))? (int) $this->GetSafeVar('raw', 'get') : SHOW_OLD_
 
 echo "\n".'<!--starting page content-->'."\n";
 echo '<div id="content"';
-echo (($user = $this->GetUser()) && ($user['doubleclickedit'] == 'N') || !$this->HasAccess('write')) ? '' : ' ondblclick="document.location=\''.$this->Href('edit', '', 'id='.$this->page['id']).'\';" '; #268
+if ($this->page)
+{
+	echo (($user = $this->GetUser()) && ($user['doubleclickedit'] == 'N') || !$this->HasAccess('write')) ? '' : ' ondblclick="document.location=\''.$this->Href('edit', '', 'id='.$this->page['id']).'\';" '; #268
+}
 echo '>'."\n";
 
 if (!$this->HasAccess('read'))
@@ -342,7 +345,7 @@ function displayComments(&$obj, &$comments, $tag)
 				 * 3. Current non-logged-in user matches IP or
 				 *    hostname of comment
 				 */
-				if ($logged_in & 
+				if ($logged_in && 
 					($is_owner || 
 				     $current_user == $comment['user']) || 
 					$obj->config['anony_delete_own_comments'] && $current_user == $comment['user'])

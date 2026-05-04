@@ -154,7 +154,7 @@ class XML_HTMLSax_StateParser {
     * @var XML_HTMLSax instance of user front end class
     * @access protected
     */
-    function XML_HTMLSax_StateParser (& $htmlsax) {
+    function __construct (& $htmlsax) {
         $this->htmlsax = & $htmlsax;
         $this->State[XML_HTMLSAX_STATE_START] = instantiate('XML_HTMLSax_StartingState');
 
@@ -192,7 +192,7 @@ class XML_HTMLSax_StateParser {
     */
     function scanCharacter() {
         if ($this->position < $this->length) {
-            return $this->rawtext{$this->position++};
+            return $this->rawtext[$this->position++];
         }
     }
 
@@ -318,8 +318,8 @@ class XML_HTMLSax_StateParser_Lt430 extends XML_HTMLSax_StateParser {
     * @var XML_HTMLSax instance of user front end class
     * @access protected
     */
-    function XML_HTMLSax_StateParser_Lt430(& $htmlsax) {
-        parent::XML_HTMLSax_StateParser($htmlsax);
+    function __construct(& $htmlsax) {
+        parent::__construct($htmlsax);
         $this->parser_options['XML_OPTION_TRIM_DATA_NODES'] = 0;
         $this->parser_options['XML_OPTION_CASE_FOLDING'] = 0;
         $this->parser_options['XML_OPTION_LINEFEED_BREAK'] = 0;
@@ -338,7 +338,7 @@ class XML_HTMLSax_StateParser_Lt430 extends XML_HTMLSax_StateParser {
     */
     function scanUntilCharacters($string) {
         $startpos = $this->position;
-        while ($this->position < $this->length && strpos($string, $this->rawtext{$this->position}) === FALSE) {
+        while ($this->position < $this->length && strpos($string, $this->rawtext[$this->position]) === FALSE) {
             $this->position++;
         }
         return substr($this->rawtext, $startpos, $this->position - $startpos);
@@ -351,7 +351,7 @@ class XML_HTMLSax_StateParser_Lt430 extends XML_HTMLSax_StateParser {
     */
     function ignoreWhitespace() {
         while ($this->position < $this->length && 
-            strpos(WHITESPACE, $this->rawtext{$this->position}) !== FALSE) {
+            strpos(WHITESPACE, $this->rawtext[$this->position]) !== FALSE) {
             $this->position++;
         }
     }
@@ -382,8 +382,8 @@ class XML_HTMLSax_StateParser_Gtet430 extends XML_HTMLSax_StateParser {
     * @var XML_HTMLSax instance of user front end class
     * @access protected
     */
-    function XML_HTMLSax_StateParser_Gtet430(& $htmlsax) {
-        parent::XML_HTMLSax_StateParser($htmlsax);
+    function __construct(& $htmlsax) {
+        parent::__construct($htmlsax);
         $this->parser_options['XML_OPTION_TRIM_DATA_NODES'] = 0;
         $this->parser_options['XML_OPTION_CASE_FOLDING'] = 0;
         $this->parser_options['XML_OPTION_LINEFEED_BREAK'] = 0;
@@ -462,7 +462,7 @@ class XML_HTMLSax {//extends Pear {
     * NullHandler for all callbacks<br />
     * @access public
     */
-    function XML_HTMLSax() {
+    function __construct() {
         if (version_compare(phpversion(), '4.3', 'ge')) {
             $this->state_parser = instantiate('XML_HTMLSax_StateParser_Gtet430', $this);
         } else {
@@ -674,7 +674,7 @@ class XML_HTMLSax_Trim {
     * @param string original handler method
     * @access protected
     */
-    function XML_HTMLSax_Trim(&$orig_obj, $orig_method) {
+    function __construct(&$orig_obj, $orig_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;
     }
@@ -722,7 +722,7 @@ class XML_HTMLSax_CaseFolding {
     * @param string original close handler method
     * @access protected
     */
-    function XML_HTMLSax_CaseFolding(&$orig_obj, $orig_open_method, $orig_close_method) {
+    function __construct(&$orig_obj, $orig_open_method, $orig_close_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_open_method = $orig_open_method;
         $this->orig_close_method = $orig_close_method;
@@ -772,7 +772,7 @@ class XML_HTMLSax_Linefeed {
     * @param string original handler method
     * @access protected
     */
-    function XML_HTMLSax_LineFeed(&$orig_obj, $orig_method) {
+    function __construct(&$orig_obj, $orig_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;
     }
@@ -814,7 +814,7 @@ class XML_HTMLSax_Tab {
     * @param string original handler method
     * @access protected
     */
-    function XML_HTMLSax_Tab(&$orig_obj, $orig_method) {
+    function __construct(&$orig_obj, $orig_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;
     }
@@ -857,7 +857,7 @@ class XML_HTMLSax_Entities_Parsed {
     * @param string original handler method
     * @access protected
     */
-    function XML_HTMLSax_Entities_Parsed(&$orig_obj, $orig_method) {
+    function __construct(&$orig_obj, $orig_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;
     }
@@ -909,7 +909,7 @@ class XML_HTMLSax_Entities_Unparsed {
     * @param string original handler method
     * @access protected
     */
-    function XML_HTMLSax_Entities_Unparsed(&$orig_obj, $orig_method) {
+    function __construct(&$orig_obj, $orig_method) {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;
     }

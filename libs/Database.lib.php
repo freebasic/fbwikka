@@ -164,7 +164,7 @@ function db_saveComment($obj, $params) {
  * @param	boolean	Update if true, create new if false	
  * @return	none
  */
-function db_storeSession($obj, $update) {
+function db_storeSession($obj, $update, $sessionid, $username) {
 	if(true == $update) {
 		// Just update the session_start time
 		if ($obj->config['dbms_type'] == 'sqlite'){
